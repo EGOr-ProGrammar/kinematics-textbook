@@ -30,7 +30,7 @@ fun TestResultScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Your Score: $scoredPoints out of $totalScore",
+            text = "Вы набрали: $scoredPoints из $totalScore",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp)

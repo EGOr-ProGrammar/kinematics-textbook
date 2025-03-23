@@ -1,7 +1,9 @@
 package com.example.kinematics.ui.screens
 
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,8 +43,13 @@ fun TopicPageScreen(
     ) {
         TheoryCard(R.string.topic1_pg1)
         TheoryCard(R.string.topic1_pg2)
+        ImageCard(
+            img = R.drawable.decartes_coordinates,
+            title = "Пример системы отсчёта"
+        )
         TheoryCard(R.string.topic1_pg3)
         TheoryCard(R.string.topic1_pg4)
+
         QuestionsCard(R.string.topic1_questions)
 
         Button(
@@ -70,8 +78,40 @@ fun TheoryCard(
         Text(
             text = stringResource(paragraph),
             fontSize = 16.sp,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
         )
+    }
+}
+
+@Composable
+fun ImageCard(
+    @DrawableRes img: Int,
+    title: String
+) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = painterResource(img),
+                contentDescription = null,
+            )
+            Text(
+                text = title,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
     }
 }
 
