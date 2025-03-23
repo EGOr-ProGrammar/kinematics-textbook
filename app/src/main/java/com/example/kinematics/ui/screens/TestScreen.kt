@@ -22,18 +22,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kinematics.ui.models.TestQuestion
 import com.example.kinematics.ui.models.TestViewModel
 
 
 @Composable
 fun TestScreen(
-    viewModel: TestViewModel = viewModel()
+    viewModel: TestViewModel = viewModel(),
+    onResult: (Int, Int) -> Unit
 ) {
     var selectedOption by remember { mutableStateOf<Int?>(null) }
-
     val uiState by viewModel.uiState.collectAsState()
-//    var currentQuestion by remember { mutableStateOf(uiState.currentQuestion) }
 
     Column(
         verticalArrangement = Arrangement.Top,
@@ -48,7 +46,7 @@ fun TestScreen(
         )
         Spacer(Modifier.height(8.dp))
 
-        // TODO: implement TestQuestion commposable to increase readability
+        // TODO: implement TestQuestion composable to increase readability
         uiState.currentQuestion.options.forEachIndexed { index, option ->
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -70,11 +68,15 @@ fun TestScreen(
             onClick = {
                 viewModel.onNextQuestion(selectedOption)
                 selectedOption = null
-            }
+                if (uiState.currentQuestionIndex == uiState.questions.size - 1) {
+                    onResult(viewModel.score, viewModel.totalScore)
+                }
+            },
+
         ) {
             Text(
                 text = if (uiState.currentQuestionIndex < uiState.questions.size - 1) "Следующий вопрос"
-                    else "Итоги"
+                else "Итоги"
             )
         }
     }
@@ -102,9 +104,3 @@ fun TestScreen(
 //        )
 //    }
 //}
-
-@Preview
-@Composable
-private fun TestScreenPreview() {
-    TestScreen()
-}
