@@ -2,8 +2,8 @@ package com.example.kinematics.datasources
 
 import com.example.kinematics.ui.models.TestQuestion
 
-object Test1DataSource {
-    val questions = listOf<TestQuestion>(
+object TestQuestionsDataSource {
+    val questions1 = listOf<TestQuestion>(
         TestQuestion(
             questionText = "Истинность теории базируется на\n" +
                     "А) достоверности экспериментов, лежащих в её основе\n" +

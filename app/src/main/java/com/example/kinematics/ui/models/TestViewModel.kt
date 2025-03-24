@@ -1,17 +1,19 @@
 package com.example.kinematics.ui.models
 
 import androidx.lifecycle.ViewModel
-import com.example.kinematics.datasources.Test1DataSource.questions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class TestViewModel: ViewModel() {
-    private var score = 0
-
-    private val _uiState = MutableStateFlow(TestUIState())
+class TestViewModel(
+    data: List<TestQuestion>
+): ViewModel() {
+    private val _uiState = MutableStateFlow(TestUIState(questions = data))
     val uiState = _uiState.asStateFlow()
-    private val totalScore = _uiState.value.questions.size
+
+    var score = 0
+        private set
+    val totalScore = _uiState.value.questions.size
 
 
     fun onNextQuestion(selectedOption: Int?) {
@@ -33,8 +35,4 @@ class TestViewModel: ViewModel() {
 //    fun onPreviousQuestion() {
 //
 //    }
-
-    init {
-
-    }
 }

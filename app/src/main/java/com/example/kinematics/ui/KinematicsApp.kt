@@ -6,15 +6,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.kinematics.datasources.TestQuestionsDataSource
+import com.example.kinematics.ui.models.TestViewModel
 import com.example.kinematics.ui.screens.HomeScreen
+import com.example.kinematics.ui.screens.TestResultScreen
 import com.example.kinematics.ui.screens.TestScreen
 import com.example.kinematics.ui.screens.TopicPageScreen
 
-enum class Screens(val index: Int) {
-    Home(1), TopicPage(2), Test(3)
+enum class Screens(val screen: String) {
+    Home("Home"), TopicPage("TopicPage"), Test("Test"), TestResult("TestResult")
 }
 
 
@@ -45,8 +50,30 @@ fun KinematicsApp(
             }
 
             composable(Screens.Test.name) {
-                TestScreen()
+                TestScreen(
+                    viewModel = TestViewModel(TestQuestionsDataSource.questions1),
+                    onResult = { score, totalScore ->
+                        navController.navigate(Screens.TestResult.name + "/$score/$totalScore")
+                    }
+                )
             }
+
+            composable(
+                route = Screens.TestResult.name+"/{score}/{totalScore}",
+                arguments = listOf(
+                    navArgument("score") { type = NavType.IntType },
+                    navArgument("totalScore") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                TestResultScreen(
+                    backStackEntry = backStackEntry,
+                    onHome = {
+                        navController.navigate(Screens.Home.name)
+                    }
+                )
+            }
+
+
         }
     }
 }
