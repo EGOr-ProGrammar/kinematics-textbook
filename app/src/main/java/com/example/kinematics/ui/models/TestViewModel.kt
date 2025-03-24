@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class TestViewModel: ViewModel() {
-    private val _uiState = MutableStateFlow(TestUIState())
+class TestViewModel(
+    data: List<TestQuestion>
+): ViewModel() {
+    private val _uiState = MutableStateFlow(TestUIState(questions = data))
     val uiState = _uiState.asStateFlow()
 
     var score = 0

@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.kinematics.datasources.TestQuestionsDataSource
+import com.example.kinematics.ui.models.TestViewModel
 import com.example.kinematics.ui.screens.HomeScreen
 import com.example.kinematics.ui.screens.TestResultScreen
 import com.example.kinematics.ui.screens.TestScreen
@@ -49,6 +51,7 @@ fun KinematicsApp(
 
             composable(Screens.Test.name) {
                 TestScreen(
+                    viewModel = TestViewModel(TestQuestionsDataSource.questions1),
                     onResult = { score, totalScore ->
                         navController.navigate(Screens.TestResult.name + "/$score/$totalScore")
                     }
