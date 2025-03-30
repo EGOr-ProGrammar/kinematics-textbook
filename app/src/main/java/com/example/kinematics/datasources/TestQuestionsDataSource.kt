@@ -1,6 +1,6 @@
 package com.example.kinematics.datasources
 
-import com.example.kinematics.ui.models.TestQuestion
+import com.example.kinematics.models.TestQuestion
 
 object TestQuestionsDataSource {
     val questions1 = listOf<TestQuestion>(

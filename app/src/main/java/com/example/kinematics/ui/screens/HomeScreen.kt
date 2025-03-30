@@ -1,16 +1,11 @@
 package com.example.kinematics.ui.screens
 
-
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.AbsoluteAlignment
@@ -20,41 +15,52 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kinematics.repository.TopicsRepository
 
 @Composable
 fun HomeScreen(
-    onTopicPage: () -> Unit,
-    modifier: Modifier = Modifier
+    onTopicPage: (String) -> Unit,
 ) {
-    Column(
+    val topics = TopicsRepository.topics.toList()
+    LazyColumn(
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = AbsoluteAlignment.Left,
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = AbsoluteAlignment.Left
     ) {
-        Card(
-            shape = CardDefaults.outlinedShape,
-            modifier = modifier.padding(8.dp),
-            onClick = {
-                onTopicPage()
-            }
-        ) {
-            Column {
-                Text(
-                    text = "Движение",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = modifier.padding(8.dp)
-                )
-                Text(
-                    text = "Понятие движения является чрезвычайно общим и охватывает самый широкий круг явлений.",
-                    fontSize = 16.sp,
-                    modifier = modifier.padding(8.dp)
-                )
-            }
+        items(topics) { (topicId, topic) ->
+            TopicCard(
+                title = topic.title,
+                description = topic.description,
+                onClick = { onTopicPage(topicId) }
+            )
         }
+    }
+}
+
+@Composable
+fun TopicCard(
+    title: String = "Заголовок темы",
+    description: String = "Описание темы",
+    onClick: () -> Unit
+) {
+    Card(
+        shape = CardDefaults.outlinedShape,
+        modifier = Modifier.padding(8.dp),
+        onClick = {
+            onClick()
+        }
+    ) {
+        Text(
+            text = title,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(8.dp)
+        )
+        Text(
+            text = description,
+            fontSize = 16.sp,
+            modifier = Modifier.padding(8.dp)
+        )
     }
 }
 

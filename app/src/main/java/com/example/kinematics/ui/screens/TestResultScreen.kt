@@ -13,14 +13,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
+import com.example.kinematics.repository.TopicsRepository
+import java.lang.ProcessBuilder.Redirect.to
 
 @Composable
 fun TestResultScreen(
     backStackEntry: NavBackStackEntry,
     onHome: () -> Unit
 ) {
+    val topicId = backStackEntry.arguments?.getString("topicId") ?: ""
     val scoredPoints = backStackEntry.arguments?.getInt("score") ?: -1
     val totalScore = backStackEntry.arguments?.getInt("totalScore") ?: -1
+
+    val testTitle = TopicsRepository.getTopic(topicId)?.title ?: ""
 
     Column(
         modifier = Modifier
@@ -30,7 +35,7 @@ fun TestResultScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Вы набрали: $scoredPoints из $totalScore",
+            text = "Вы набрали $scoredPoints из $totalScore теста по теме \"$testTitle\"",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp)

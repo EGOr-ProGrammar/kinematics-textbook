@@ -11,15 +11,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.kinematics.datasources.TestQuestionsDataSource
-import com.example.kinematics.ui.models.TestViewModel
+import com.example.kinematics.models.TestViewModel
+import com.example.kinematics.repository.TopicsRepository
 import com.example.kinematics.ui.screens.HomeScreen
 import com.example.kinematics.ui.screens.TestResultScreen
 import com.example.kinematics.ui.screens.TestScreen
-import com.example.kinematics.ui.screens.TopicPageScreen
+import com.example.kinematics.ui.screens.TopicScreen
 
 enum class Screens(val screen: String) {
-    Home("Home"), TopicPage("TopicPage"), Test("Test"), TestResult("TestResult")
+    Home("home"), TopicPage("topic"), Test("test"), TestResult("result")
 }
 
 
@@ -35,32 +35,44 @@ fun KinematicsApp(
         ) {
             composable(Screens.Home.name) {
                 HomeScreen(
-                    onTopicPage = {
-                        navController.navigate(Screens.TopicPage.name)
-                    }
-                )
-            }
-
-            composable(Screens.TopicPage.name) {
-                TopicPageScreen(
-                    onTest = {
-                        navController.navigate(Screens.Test.name)
-                    }
-                )
-            }
-
-            composable(Screens.Test.name) {
-                TestScreen(
-                    viewModel = TestViewModel(TestQuestionsDataSource.questions1),
-                    onResult = { score, totalScore ->
-                        navController.navigate(Screens.TestResult.name + "/$score/$totalScore")
+                    onTopicPage = { topicId ->
+                        navController.navigate(Screens.TopicPage.name + "/$topicId")
                     }
                 )
             }
 
             composable(
-                route = Screens.TestResult.name+"/{score}/{totalScore}",
+                route = Screens.TopicPage.name+"/{topicId}",
+                arguments = listOf(navArgument("topicId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val topicId = backStackEntry.arguments?.getString("topicId") ?: ""
+                TopicScreen(
+                    onTest = { topicId ->
+                        navController.navigate(Screens.Test.name+"/$topicId")
+                    },
+                    topicId = topicId
+                )
+            }
+
+            composable(
+                route = Screens.Test.name+"/{topicId}",
+                arguments = listOf(navArgument("topicId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val topicId = backStackEntry.arguments?.getString("topicId") ?: ""
+                val questions = TopicsRepository.getTopic(topicId)?.testQuestions ?: emptyList()
+
+                TestScreen(
+                    viewModel = TestViewModel(questions),
+                    onResult = { score, totalScore ->
+                        navController.navigate(Screens.TestResult.name + "/$topicId/$score/$totalScore")
+                    }
+                )
+            }
+
+            composable(
+                route = Screens.TestResult.name+"/{topicId}/{score}/{totalScore}",
                 arguments = listOf(
+                    navArgument("topicId") { type = NavType.StringType },
                     navArgument("score") { type = NavType.IntType },
                     navArgument("totalScore") { type = NavType.IntType }
                 )
@@ -72,8 +84,6 @@ fun KinematicsApp(
                     }
                 )
             }
-
-
         }
     }
 }

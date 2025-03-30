@@ -1,22 +1,24 @@
 package com.example.kinematics.ui.screens
 
-
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,38 +29,56 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kinematics.R
-
+import com.example.kinematics.models.ContentItem
+import com.example.kinematics.repository.TopicsRepository
 
 @Composable
-fun TopicPageScreen(
-    onTest: () -> Unit,
-    modifier: Modifier = Modifier
+fun TopicScreen(
+    onTest: (String) -> Unit,
+    topicId: String
 ) {
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-    ) {
-        TheoryCard(R.string.topic1_pg1)
-        TheoryCard(R.string.topic1_pg2)
-        ImageCard(
-            img = R.drawable.decartes_coordinates,
-            title = "Пример системы отсчёта"
-        )
-        TheoryCard(R.string.topic1_pg3)
-        TheoryCard(R.string.topic1_pg4)
+    val topic = remember(topicId) { TopicsRepository.getTopic(topicId) }
 
-        QuestionsCard(R.string.topic1_questions)
-
-        Button(
-            onClick = { onTest() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+    topic?.let {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(stringResource(R.string.take_test))
+            item {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = topic.title,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            }
+
+            items(topic.contentItems ) { item ->
+                when (item) {
+                    is ContentItem.Theory -> TheoryCard(item.text)
+                    is ContentItem.Image -> ImageCard(item.resId, item.caption)
+                    is ContentItem.Question -> QuestionCard(item.questions)
+                }
+            }
+
+            item {
+                Button(
+                    onClick = { onTest(topicId) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(stringResource(R.string.take_test))
+                }
+            }
+        }
+    } ?: run {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("Тема не найдена")
         }
     }
 }
@@ -88,7 +108,7 @@ fun TheoryCard(
 @Composable
 fun ImageCard(
     @DrawableRes img: Int,
-    title: String
+    caption: String?
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -108,7 +128,7 @@ fun ImageCard(
                 contentDescription = null,
             )
             Text(
-                text = title,
+                text = caption.toString(),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
@@ -116,7 +136,7 @@ fun ImageCard(
 }
 
 @Composable
-fun QuestionsCard(
+fun QuestionCard(
     @StringRes questions: Int
 ) {
     Card(
@@ -143,8 +163,11 @@ fun QuestionsCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun TopicPagePreview() {
-    TopicPageScreen({})
+    TopicScreen(
+        {},
+        topicId = "movement"
+    )
 }
