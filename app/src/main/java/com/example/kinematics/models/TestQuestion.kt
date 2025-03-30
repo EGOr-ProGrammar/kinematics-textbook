@@ -1,4 +1,4 @@
-package com.example.kinematics.ui.models
+package com.example.kinematics.models
 
 data class TestQuestion(
     val questionText: String = "",

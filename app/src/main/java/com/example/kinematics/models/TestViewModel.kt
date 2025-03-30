@@ -1,4 +1,4 @@
-package com.example.kinematics.ui.models
+package com.example.kinematics.models
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

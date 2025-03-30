@@ -1,4 +1,4 @@
-package com.example.kinematics.ui.models
+package com.example.kinematics.models
 
 data class TestUIState(
     val questions: List<TestQuestion> = emptyList<TestQuestion>(),
