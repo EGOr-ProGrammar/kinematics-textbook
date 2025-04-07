@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +52,7 @@ fun TopicScreen(
                     Text(
                         text = topic.title,
                         fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(16.dp)
                     )
@@ -129,7 +131,8 @@ fun ImageCard(
             )
             Text(
                 text = caption.toString(),
-                modifier = Modifier.padding(bottom = 8.dp)
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(8.dp)
             )
         }
     }
@@ -168,6 +171,6 @@ fun QuestionCard(
 private fun TopicPagePreview() {
     TopicScreen(
         {},
-        topicId = "movement"
+        topicId = "movement_ways"
     )
 }

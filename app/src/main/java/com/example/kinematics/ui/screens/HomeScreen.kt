@@ -53,7 +53,6 @@ fun TopicCard(
             text = title,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
             modifier = Modifier.padding(8.dp)
         )
         Text(
@@ -68,4 +67,10 @@ fun TopicCard(
 @Composable
 private fun HomeScreenPreview() {
     HomeScreen(onTopicPage = {})
+}
+
+@Preview
+@Composable
+private fun TopicCardPreview() {
+    TopicCard(onClick = {})
 }

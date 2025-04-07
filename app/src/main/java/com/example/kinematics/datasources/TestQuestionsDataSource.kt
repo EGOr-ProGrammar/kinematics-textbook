@@ -51,4 +51,13 @@ object TestQuestionsDataSource {
             correctAnswerIndex = 2
         )
     )
+    val questions2 = listOf<TestQuestion> (
+        TestQuestion(
+            questionText = "Точка движется в плоскости ХОУ. Вектор r, модуль которого равен 1 м, направлен под углом 30° к оси Х. Чему равны проекции вектора г на оси Х и У? ",
+            options = listOf(
+                "1) 0,5; 0,87", "2) 0,5; 0", "3) 0,87; 0,5", "4) 0,87; 0 "
+            ),
+            correctAnswerIndex = 0
+        )
+    )
 }
