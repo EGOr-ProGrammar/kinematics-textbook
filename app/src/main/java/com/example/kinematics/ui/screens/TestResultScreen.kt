@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavBackStackEntry
 import com.example.kinematics.repository.TopicsRepository
-import java.lang.ProcessBuilder.Redirect.to
 
 @Composable
 fun TestResultScreen(
@@ -35,7 +34,7 @@ fun TestResultScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Вы набрали $scoredPoints из $totalScore теста по теме \"$testTitle\"",
+            text = "Вы набрали $scoredPoints из $totalScore теста по теме \"$testTitle\".",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp)

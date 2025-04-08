@@ -3,7 +3,7 @@ package com.example.kinematics.datasources
 import com.example.kinematics.models.TestQuestion
 
 object TestQuestionsDataSource {
-    val questions1 = listOf<TestQuestion>(
+    val questions1 = listOf(
         TestQuestion(
             questionText = "Истинность теории базируется на\n" +
                     "А) достоверности экспериментов, лежащих в её основе\n" +
@@ -51,13 +51,44 @@ object TestQuestionsDataSource {
             correctAnswerIndex = 2
         )
     )
-    val questions2 = listOf<TestQuestion> (
+    val questions2 = listOf(
         TestQuestion(
             questionText = "Точка движется в плоскости ХОУ. Вектор r, модуль которого равен 1 м, направлен под углом 30° к оси Х. Чему равны проекции вектора г на оси Х и У? ",
             options = listOf(
                 "1) 0,5; 0,87", "2) 0,5; 0", "3) 0,87; 0,5", "4) 0,87; 0 "
             ),
             correctAnswerIndex = 0
+        ),
+        TestQuestion(
+            questionText = "Точка движется в плоскости ХОУ. Вектор r, модуль которого равен 2 м, направлен под углом 135° к оси Х. Чему равны проекции вектора на оси Х и Y?",
+            options = listOf(
+                "1) 1,41; 1,41", "2) 0,71; 0", "3)-1,41; -0,71", "4) -1,41; 1,41 м"
+            ),
+            correctAnswerIndex = 3,
+        ),
+        TestQuestion(
+            questionText = "Начальное положение точки r (3; 0). Чему равен модуль вектора, определяющего новое положение точки, если изменение координаты у равно 4?",
+            options = listOf(
+                "1) 7 м", "2) 5 м", "3) 4 м", "4) 1 м"
+            ),
+            correctAnswerIndex = 1,
+        ),
+        TestQuestion(
+            questionText = "Начальное положение точки r(4; 0; 0). Через промежуток времени і положение точки (4; 0; 3). Кинематические уравнения движения имеют вид",
+            options = listOf(
+                "1) x = 4 м\n y = 0\n z = 5 м",
+                "2) x = 4 м\n y = y(t)\n z = 3 м",
+                "3) x = 4 м\n y = 0\n z = 3 м",
+                "4) x = 4 м\n y = 0\n z = z(t) м",
+            ),
+            correctAnswerIndex = 3
+        ),
+        TestQuestion(
+            questionText = "Точка движется по прямой в плоскости ХОУ. Начальное положение точки r(3; 0), конечное r(0; 3). Угол к оси ОХ, под которым двигалась точка, равен",
+            options = listOf(
+                "1) 0°", "2) 45°", "3) 135°", "4) 90°"
+            ),
+            correctAnswerIndex = 2
         )
     )
 }
