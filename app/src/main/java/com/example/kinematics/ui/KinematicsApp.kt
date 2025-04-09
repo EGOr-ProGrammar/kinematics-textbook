@@ -18,7 +18,7 @@ import com.example.kinematics.ui.screens.TestResultScreen
 import com.example.kinematics.ui.screens.TestScreen
 import com.example.kinematics.ui.screens.TopicScreen
 
-enum class Screens(val screen: String) {
+enum class Screens(screen: String) {
     Home("home"), TopicPage("topic"), Test("test"), TestResult("result")
 }
 

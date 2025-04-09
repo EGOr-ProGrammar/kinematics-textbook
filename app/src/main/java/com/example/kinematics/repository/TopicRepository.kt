@@ -19,6 +19,50 @@ object TopicsRepository {
                 ContentItem.Question(R.string.topic1_questions)
             ),
             testQuestions = TestQuestionsDataSource.questions1
+        ),
+        "movement_ways" to TopicData(
+            title = "Способы описания движения",
+            description = "Если тело можно считать точкой, то для описания его движения нужно " +
+                    "научиться рассчитывать положение точки в любой момент времени относительно" +
+                    " выбранного тела отсчёта.",
+            contentItems = listOf(
+                ContentItem.Theory(R.string.topic2_pg1),
+                ContentItem.Image(
+                    R.drawable.kinamatics_equation,
+                    caption = "Кинематическое уравнение движения точки в координатной форме."
+                ),
+                ContentItem.Theory(R.string.topic2_pg2),
+                ContentItem.Theory(R.string.topic2_pg3),
+                ContentItem.Theory(R.string.topic2_pg4),
+                ContentItem.Image(
+                    R.drawable.projection,
+                    caption = "Проекции точек A, B на ось OX."
+                ),
+                ContentItem.Question(R.string.topic2_questions)
+            ),
+            testQuestions = TestQuestionsDataSource.questions2
+        ),
+        "trajectory" to TopicData(
+            title = "Траектория. Путь. Перемещение",
+            description = "Обозначим еще несколько понятий, которые важны при изучении механического движения.",
+            contentItems = listOf(
+                ContentItem.Theory(R.string.topic3_pg1),
+                ContentItem.Theory(R.string.topic3_pg2),
+                ContentItem.Theory(R.string.topic3_pg3),
+                ContentItem.Image(
+                    resId = R.drawable.trajectory1,
+                    caption = "Рис. 1"
+                ),
+                ContentItem.Theory(R.string.topic3_pg4),
+                ContentItem.Image(
+                    resId = R.drawable.trajectory2,
+                    caption = "Рис. 2"
+                ),
+                ContentItem.Theory(R.string.topic3_pg5),
+                ContentItem.Theory(R.string.topic3_pg6),
+                ContentItem.Question(R.string.topic3_questions)
+            ),
+            testQuestions = TestQuestionsDataSource.questions3
         )
     )
 
