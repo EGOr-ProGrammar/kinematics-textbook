@@ -41,6 +41,29 @@ object TopicsRepository {
                 ContentItem.Question(R.string.topic2_questions)
             ),
             testQuestions = TestQuestionsDataSource.questions2
+        ),
+        "trajectory" to TopicData(
+            title = "Траектория. Путь. Перемещение",
+            description = "Обозначим еще несколько понятий, которые важны при изучении механического движения.",
+            contentItems = listOf(
+                ContentItem.Theory(R.string.topic3_pg1),
+                ContentItem.Theory(R.string.topic3_pg2),
+                ContentItem.Image(
+                    resId = R.drawable.trajectory1,
+                    caption = "Рис. 1"
+                ),
+                ContentItem.Theory(R.string.topic3_pg3),
+
+                ContentItem.Theory(R.string.topic3_pg4),
+                ContentItem.Image(
+                    resId = R.drawable.trajectory2,
+                    caption = "Рис. 2"
+                ),
+                ContentItem.Theory(R.string.topic3_pg5),
+                ContentItem.Theory(R.string.topic3_pg6),
+                ContentItem.Question(R.string.topic3_questions)
+            ),
+            testQuestions = TestQuestionsDataSource.questions3
         )
     )
 
