@@ -48,12 +48,11 @@ object TopicsRepository {
             contentItems = listOf(
                 ContentItem.Theory(R.string.topic3_pg1),
                 ContentItem.Theory(R.string.topic3_pg2),
+                ContentItem.Theory(R.string.topic3_pg3),
                 ContentItem.Image(
                     resId = R.drawable.trajectory1,
                     caption = "Рис. 1"
                 ),
-                ContentItem.Theory(R.string.topic3_pg3),
-
                 ContentItem.Theory(R.string.topic3_pg4),
                 ContentItem.Image(
                     resId = R.drawable.trajectory2,
