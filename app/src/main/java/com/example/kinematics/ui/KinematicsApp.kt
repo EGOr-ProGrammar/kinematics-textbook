@@ -1,10 +1,15 @@
 package com.example.kinematics.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,11 +28,30 @@ enum class Screens(screen: String) {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KinematicsApp(
     navController: NavHostController = rememberNavController()
 ) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    val navBackStackEntry = navController.currentBackStackEntry
+    val currentRoute = navBackStackEntry?.destination?.route
+    val currentTitle = when(currentRoute) {
+        Screens.Home.name -> "Выберите тему"
+        Screens.TopicPage.name -> {
+            val topicId = navBackStackEntry.arguments?.getString("topicId") ?: ""
+            topicId // Замените на реальное название темы
+        }
+        Screens.Test.name -> "Тест"
+        else -> "Выберите тему"
+    }
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            KinematicsTopBar(currentTitle)
+         },
+
+    ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screens.Home.name,
@@ -42,7 +66,7 @@ fun KinematicsApp(
             }
 
             composable(
-                route = Screens.TopicPage.name+"/{topicId}",
+                route = "${Screens.TopicPage.name}/{topicId}",
                 arguments = listOf(navArgument("topicId") { type = NavType.StringType })
             ) { backStackEntry ->
                 val topicId = backStackEntry.arguments?.getString("topicId") ?: ""
@@ -55,7 +79,7 @@ fun KinematicsApp(
             }
 
             composable(
-                route = Screens.Test.name+"/{topicId}",
+                route = "${Screens.Test.name}/{topicId}",
                 arguments = listOf(navArgument("topicId") { type = NavType.StringType })
             ) { backStackEntry ->
                 val topicId = backStackEntry.arguments?.getString("topicId") ?: ""
@@ -70,7 +94,7 @@ fun KinematicsApp(
             }
 
             composable(
-                route = Screens.TestResult.name+"/{topicId}/{score}/{totalScore}",
+                route = "${Screens.TestResult.name}/{topicId}/{score}/{totalScore}",
                 arguments = listOf(
                     navArgument("topicId") { type = NavType.StringType },
                     navArgument("score") { type = NavType.IntType },
@@ -86,4 +110,18 @@ fun KinematicsApp(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KinematicsTopBar(title: String) {
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+        },
+    )
 }
