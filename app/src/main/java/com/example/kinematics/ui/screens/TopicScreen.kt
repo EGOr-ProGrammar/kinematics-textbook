@@ -45,21 +45,6 @@ fun TopicScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            item {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = topic.title,
-                        fontSize = 24.sp,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-            }
-
             items(topic.contentItems ) { item ->
                 when (item) {
                     is ContentItem.Theory -> TheoryCard(item.text)
